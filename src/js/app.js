@@ -84,7 +84,7 @@ Particle.prototype = {
 };
 
 //И напишем вспомогательные ф-и
-var random: function( min, max ) {
+var random = function( min, max ) {
     if (this.isArray( min )) {
         return min[ ~~( Math.random() * min.length ) ];
     }
@@ -92,15 +92,15 @@ var random: function( min, max ) {
         max = min || 1, min = 0;
     }
     return min + Math.random() * ( max - min );
-},
+};
 //Проверка на массив
-var isArray: function(object) {
+var isArray = function(object) {
     return Object.prototype.toString.call( object ) == '[object Array]';
-},
+};
 //Проверка на число
-var isNumber: function(object) {
+var isNumber = function(object) {
     return typeof object == 'number';
-}
+};
 
 
 var AudioContext = w.AudioContext || w.webkitAudioContext;
