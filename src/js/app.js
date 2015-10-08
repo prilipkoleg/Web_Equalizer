@@ -69,19 +69,19 @@ function draw_frequency_bar() {
     canvasFBCtx.fillStyle = 'rgb(200, 200, 200)';
     canvasFBCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-    var barWidth = (WIDTH / bufferLengthFB) * 2.5;
+    var barWidth = (WIDTH / bufferLengthFB) * 0.5; // ширина полосы
     var barHeight;
     var x = 0;
 
     canvasFBCtx.beginPath();
 
     for(var i = 0; i < bufferLengthFB; i++) {
-        barHeight = dataArrayFB[i]/2;
+        barHeight = dataArrayFB[i];
 
         canvasFBCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
         canvasFBCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
 
-        x += barWidth + 1;
+        x += barWidth + 0.25; // растояние
     }
 };
 
