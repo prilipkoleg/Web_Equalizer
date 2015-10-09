@@ -1,3 +1,30 @@
+$( document ).ready(function(){
+    var audio = document.getElementById('audio');
+
+    var audio_list = $('.audio-list');
+
+    audio_list.on('click', 'li', function(){
+        var me = $(this),
+            src = me.data('src');
+
+        //say(me.data('src'));
+        audio_list.find('li').removeClass('active');
+        me.addClass('active');
+        $(audio).attr('src', src);
+        audio.play();
+    });
+
+    $(audio).on('play', function(){
+        //alert('play');
+    });
+
+    function say( word ){
+        console.log( word );
+    };
+});
+
+
+
 var audio = document.getElementById('audio');
 
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();

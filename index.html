@@ -1,26 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Equalizer</title>
+    <title>Visualizer</title>
+    <meta charset="utf-8"/>
 
+    <link rel="stylesheet" href="src/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="src/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="src/css/style.css"/>
 
+    <script src="src/js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
 
-    <h3>Equalizer</h3>
+        <header>
+            <div class="container">
 
-    <hr/>
+                <div class="page-header">
+                    <h3>Equalizer</h3>
+                </div>
+            </div>
+        </header>
 
-    <audio controls loop class="audio" preload="auto" id="audio" src="music/LillyWood-PrayerInC.mp3"></audio>
-    <!--<audio controls loop class="audio" preload="auto" id="audio" src="http://webslides.github.io/music/Royksopp-Here_she_comes_again.mp3"></audio>-->
+        <main>
+            <div class="container">
 
-    <hr/>
+                <div class="row">
+                    <div class="col-md-5">
 
-    <canvas id="oscilloscope" width="500" height="200" style="border:1px solid #000000;"></canvas>
+                        <div class="player-container well">
+                            <audio controls class="audio_player" preload="auto" id="audio" src="music/LillyWood-PrayerInC.mp3"></audio>
+                            <!--<audio controls loop class="audio" preload="auto" id="audio" src="http://webslides.github.io/music/Royksopp-Here_she_comes_again.mp3"></audio>-->
+                        </div>
 
-    <hr/>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Choose Track:</div>
 
-    <canvas id="frequency_bar" width="500" height="200" style="border:1px solid #000000;"></canvas>
+                            <ul class="list-group audio-list">
+                                <li data-src="music/LillyWood-PrayerInC.mp3" class="list-group-item">
+                                    <span class="list_numb">1</span>
+                                    <span class="name">Lilly Wood - PrayerInC</span>
+                                </li>
+                                <li data-src="music/Royksopp-Here_She_Comes_Again_(DJ_Antonio_Rmx).mp3" class="list-group-item">
+                                    <span class="list_numb">2</span>
+                                    <span class="name">Royksopp - Here She Comes Again(DJ Antonio Rmx)</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="canvas-elements">
+
+                            <canvas id="oscilloscope" width="500" height="200"></canvas>
+
+                            <hr/>
+
+                            <canvas id="frequency_bar" width="500" height="200"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                &copy;Visualizer
+            </div>
+        </footer>
+
+    </div>
+</div>
 
 <script src="src/js/app.js"></script>
 </body>
