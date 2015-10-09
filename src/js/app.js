@@ -40,12 +40,12 @@ function draw_oscilloscope() {
     for(var i = 0; i < bufferLengthOs; i++) {
 
         var v = dataArrayOs[i] / 128.0;
-        var y = v * HEIGHT/2;
+        var y = v * HEIGHT/5;
 
         if(i === 0) {
-            canvasOsCtx.moveTo(x, y);
+            canvasOsCtx.moveTo(0, 100);
         } else {
-            canvasOsCtx.lineTo(x, y);
+            canvasOsCtx.lineTo(x+2, y+100);
         }
 
         x += sliceWidth;
@@ -69,7 +69,7 @@ function draw_frequency_bar() {
     canvasFBCtx.fillStyle = 'rgb(200, 200, 200)';
     canvasFBCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-    var barWidth = (WIDTH / bufferLengthFB) * 0.5; // ширина полосы
+    var barWidth = (WIDTH / bufferLengthFB) * 0.6; // ширина полосы
     var barHeight;
     var x = 0;
 
