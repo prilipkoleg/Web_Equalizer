@@ -10,7 +10,9 @@ $( document ).ready(function(){
         //say(me.data('src'));
         audio_list.find('li').removeClass('active');
         me.addClass('active');
+
         $(audio).attr('src', src);
+
         audio.play();
     });
 
@@ -43,16 +45,16 @@ var canvasFBCtx = frequency_bar.getContext("2d");
 var WIDTH   = 500,
     HEIGHT  = 200;
 
-//a waveform/oscilloscope
 analyser.fftSizeOs = 2048;
-var bufferLengthOs = analyser.frequencyBinCount;
-var dataArrayOs = new Uint8Array(bufferLengthOs);
+var bufferLength = analyser.frequencyBinCount;
+var dataArray = new Uint8Array(bufferLength);
 
+//a waveform/oscilloscope
 canvasOsCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
 function draw_oscilloscope() {
     drawVisualOs = requestAnimationFrame(draw_oscilloscope);
-    analyser.getByteFrequencyData(dataArrayOs);
+    analyser.getByteFrequencyData(dataArray);
 
     canvasOsCtx.fillStyle = 'rgb(200, 200, 200)';
     canvasOsCtx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -61,12 +63,12 @@ function draw_oscilloscope() {
     canvasOsCtx.strokeStyle = 'rgb(0, 0, 0)';
     canvasOsCtx.beginPath();
 
-    var sliceWidth = WIDTH * 1.0 / bufferLengthOs;
+    var sliceWidth = WIDTH * 1.0 / bufferLength;
     var x = 0;
 
-    for(var i = 0; i < bufferLengthOs; i++) {
+    for(var i = 0; i < bufferLength; i++) {
 
-        var v = dataArrayOs[i] / 128.0;
+        var v = dataArray[i] / 128.0;
         var y = v * HEIGHT/5;
 
         if(i === 0) {
@@ -83,29 +85,34 @@ function draw_oscilloscope() {
 };
 
 // a frequency bar graph
-analyser.fftSizeFB = 256;
-var bufferLengthFB = analyser.frequencyBinCount;
-var dataArrayFB = new Uint8Array(bufferLengthFB);
+//analyser.fftSizeFB = 256;
+var bufferLength = analyser.frequencyBinCount;
+var dataArray = new Uint8Array(bufferLength);
 
 canvasFBCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
 function draw_frequency_bar() {
     drawVisualFB = requestAnimationFrame(draw_frequency_bar);
-    analyser.getByteFrequencyData(dataArrayFB);
+    analyser.getByteFrequencyData(dataArray);
 
     canvasFBCtx.fillStyle = 'rgb(200, 200, 200)';
     canvasFBCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-    var barWidth = (WIDTH / bufferLengthFB) * 0.6; // ширина полосы
+    var barWidth = (WIDTH / bufferLength) * 0.6; // ширина полосы
     var barHeight;
     var x = 0;
 
     canvasFBCtx.beginPath();
 
-    for(var i = 0; i < bufferLengthFB; i++) {
-        barHeight = dataArrayFB[i];
+    for(var i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i];
 
-        canvasFBCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+        //one colour:
+        //canvasFBCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+
+        //rainbow:
+        var hue = i/bufferLength * 360;
+        canvasFBCtx.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
         canvasFBCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
 
         x += barWidth + 0.25; // растояние
