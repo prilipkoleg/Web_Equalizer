@@ -1,0 +1,23 @@
+{
+  "name": "visualizer",
+  "version": "0.0.1",
+  "description": "node.js + polymer",
+  "author": "Oleg Prilipko <prilipkoleg@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js",
+    "predeploy": "echo im about to deploy",
+    "postdeploy": "echo ive deployed",
+    "prepublish": "coffee --bare --compile --output lib/foo src/foo/*.coffee"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.1.0",
+    "electron-prebuilt": "^0.30.7"
+  },
+  "dependencies": {
+    "node-notifier": "^4.3.1",
+    "request": "^2.64.0",
+    "express": "~4.13.3"
+  },
+  "license": "MIT"
+}

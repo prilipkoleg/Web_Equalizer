@@ -16,13 +16,45 @@ $( document ).ready(function(){
         audio.play();
     });
 
+    /*var is_playing = false;
+
     $(audio).on('play', function(){
         //alert('play');
+        step();
+        is_playing = true;
+
     });
+
+    $(audio).on('pause', function(){
+        setTimeout(function(){
+
+            if(!is_playing){
+                alert('stop');
+            }
+        }, 2000)
+        is_playing = false;
+    })
+
+
+
+    var fps = 0.5;
+    function step() {
+        setTimeout(function() {
+            requestAnimationFrame(step);
+        // Drawing code goes here
+            say('is playing = ' + is_playing + '!!!' );
+        }, 1000 / fps);
+    }
+
+    function say_playing(){
+
+        var say_RAP = requestAnimationFrame(say_playing());
+        setTimeout(say("is playing"), 3000)
+    }*/
 
     function say( word ){
         console.log( word );
-    };
+    }
 });
 
 
@@ -85,7 +117,7 @@ function draw_oscilloscope() {
 };
 
 // a frequency bar graph
-//analyser.fftSizeFB = 256;
+/*analyser.fftSizeFB = 256;*/
 var bufferLength = analyser.frequencyBinCount;
 var dataArray = new Uint8Array(bufferLength);
 
