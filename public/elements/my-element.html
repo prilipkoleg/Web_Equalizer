@@ -1,17 +1,41 @@
 <link rel="import" href="../src/bower_components/polymer/polymer.html"/>
 
-<dom-element id="my-element" attributes="square">
+<dom-module id="my-element" attributes="square">
     <template>
-        <style>input {box-sizing:border-box;width:100%;}</style>
-        <input type="number" value="{{num}}"><br>
-        <em>{{num}}^2 = {{square}}</em>
+        <style>
+            .my-element {
+                margin: 20px 0;
+                color: #000000;
+            }
+
+            input {
+                box-sizing:border-box;
+                width:100%;
+            }
+        </style>
+
+        <input type="number" value="{{num::input}}"><br>
+        <em><span>{{num}}</span> <sup>2</sup> = <span>{{square}}</span></em>
+
     </template>
     <script>
-        Polymer('my-element', {
-            num: 2,
-            computed: {
-                square: 'num * num'
+        Polymer({
+            is : 'my-element',
+
+            properties : {
+                num : {
+                    type: Number,
+                    value: 1,
+                    notify: true
+                },
+                square : {
+                    type: Number,
+                    computed: 'get_square(num)'
+                }
+            },
+            get_square: function(val) {
+                return val*val;
             }
         });
     </script>
-</dom-element>
+</dom-module>

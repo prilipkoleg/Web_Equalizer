@@ -70,7 +70,7 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-/bower_components
+/public/bower_components
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
