@@ -118,8 +118,8 @@ function draw_oscilloscope() {
 
 // a frequency bar graph
 /*analyser.fftSizeFB = 256;*/
-var bufferLength = analyser.frequencyBinCount;
-var dataArray = new Uint8Array(bufferLength);
+//var bufferLength = analyser.frequencyBinCount;
+//var dataArray = new Uint8Array(bufferLength);
 
 canvasFBCtx.clearRect(0, 0, WIDTH, HEIGHT);
 

@@ -5,7 +5,7 @@
   "author": "Oleg Prilipko <prilipkoleg@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "start": "index.js",
+    "start": "node index.js",
     "predeploy": "echo im about to deploy",
     "postdeploy": "echo ive deployed",
     "prepublish": "coffee --bare --compile --output lib/foo src/foo/*.coffee"
