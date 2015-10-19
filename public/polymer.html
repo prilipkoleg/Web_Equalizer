@@ -8,6 +8,7 @@
 
     <script src="src/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 
+    <link rel="import" href="src/bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
     <link rel="import" href="src/bower_components/paper-drawer-panel/paper-drawer-panel.html">
     <link rel="import" href="src/bower_components/paper-header-panel/paper-header-panel.html">
     <link rel="import" href="src/bower_components/paper-toolbar/paper-toolbar.html">
@@ -26,13 +27,13 @@
                 <div drawer>
                     <paper-header-panel class="flex" mode="standard">
                         <paper-toolbar>
-                            <div><paper-icon-button icon="menu"></paper-icon-button></div>
+                            <!--<div><paper-icon-button icon="menu"></paper-icon-button></div>-->
                             <div class="middle title">My page</div>
                             <!--<div class="middle title">Middle Title</div>
                             <div class="bottom title">Bottom Title</div>-->
                         </paper-toolbar>
                         <div class="content fit">
-                            <paper-menu>
+                            <paper-menu id="nav">
                                 <paper-item data-route="menu item 1" on-tap="navigate">menu item 1</paper-item>
                                 <paper-item data-route="menu item 2" on-tap="navigate">menu item 2</paper-item>
                                 <paper-item data-route="menu item 3" on-tap="navigate">menu item 3</paper-item>
@@ -42,6 +43,10 @@
                     </paper-header-panel>
                 </div>
                 <div main>
+                    <!--<paper-scroll-header-panel class="flex" role="toolbar">-->
+                        <!--<paper-toolbar>Header {{route}}</paper-toolbar>-->
+                        <!--<div>Content goes here...</div>-->
+                    <!--</paper-scroll-header-panel>-->
                     <paper-header-panel class="flex" mode="standard">
                         <paper-toolbar class="">
                             <div>{{route}}</div>
