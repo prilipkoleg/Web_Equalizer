@@ -6,7 +6,7 @@
 
     app.route = 'home';
     app.navigate = function (e) {
-        console.log(e.target);
+        //console.log(e.target);
         app.route = e.target.getAttribute('data-route');
     }
 

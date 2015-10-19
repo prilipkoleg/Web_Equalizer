@@ -14,6 +14,9 @@
     <link rel="import" href="src/bower_components/paper-menu/paper-menu.html">
     <link rel="import" href="src/bower_components/paper-menu/paper-submenu.html">
     <link rel="import" href="src/bower_components/paper-item/paper-item.html">
+    <link rel="import" href="src/bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+    <link rel="import" href="src/bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="src/bower_components/paper-icon-button/paper-icon-button.html">
 
 </head>
 <body unresolved class="fullbleed layout vertical">
@@ -23,46 +26,35 @@
                 <div drawer>
                     <paper-header-panel class="flex" mode="standard">
                         <paper-toolbar>
-                            <div>{{route}}</div>
+                            <div><paper-icon-button icon="menu"></paper-icon-button></div>
+                            <div class="middle title">My page</div>
                             <!--<div class="middle title">Middle Title</div>
                             <div class="bottom title">Bottom Title</div>-->
                         </paper-toolbar>
                         <div class="content fit">
-                            <div>{{route}}</div>
                             <paper-menu>
-                                <paper-item data-route="topic_1" on-tap="navigate">Topic 1</paper-item>
-                                <paper-submenu>
-                                    <paper-item class="menu-trigger">Topics</paper-item>
-                                    <paper-menu class="menu-content">
-                                        <paper-item>Topic 1</paper-item>
-                                        <paper-item>Topic 2</paper-item>
-                                        <paper-item>Topic 3</paper-item>
-                                    </paper-menu>
-                                </paper-submenu>
-                                <paper-submenu>
-                                    <paper-item class="menu-trigger">Faves</paper-item>
-                                    <paper-menu class="menu-content">
-                                        <paper-item>Fave 1</paper-item>
-                                        <paper-item>Fave 2</paper-item>
-                                    </paper-menu>
-                                </paper-submenu>
-                                <paper-submenu disabled>
-                                    <paper-item class="menu-trigger">Unavailable</paper-item>
-                                    <paper-menu class="menu-content">
-                                        <paper-item>Disabled 1</paper-item>
-                                        <paper-item>Disabled 2</paper-item>
-                                    </paper-menu>
-                                </paper-submenu>
+                                <paper-item data-route="menu item 1" on-tap="navigate">menu item 1</paper-item>
+                                <paper-item data-route="menu item 2" on-tap="navigate">menu item 2</paper-item>
+                                <paper-item data-route="menu item 3" on-tap="navigate">menu item 3</paper-item>
+                                <paper-item data-route="menu item 4" on-tap="navigate">menu item 4</paper-item>
                             </paper-menu>
                         </div>
                     </paper-header-panel>
                 </div>
                 <div main>
                     <paper-header-panel class="flex" mode="standard">
-                        <paper-toolbar class="medium-tall">
-                            <div>title</div>
+                        <paper-toolbar class="">
+                            <div>{{route}}</div>
                         </paper-toolbar>
-                        <div class="content fit">content fits 100% below the header</div>
+                        <div class="content fit">
+                            <iron-flex-layout>
+                                <div class="vertical layout" style="height:250px">
+                                    <div>Alpha</div>
+                                    <div class="flex">Beta (flex)</div>
+                                    <div>Gamma</div>
+                                </div>
+                            </iron-flex-layout>
+                        </div>
                     </paper-header-panel>
                 </div>
             </paper-drawer-panel>
