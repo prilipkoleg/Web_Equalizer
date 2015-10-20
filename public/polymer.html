@@ -19,6 +19,8 @@
     <link rel="import" href="src/bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="src/bower_components/paper-icon-button/paper-icon-button.html">
 
+    <link rel="import" href="elements/audio-player.html">
+
 </head>
 <body unresolved class="fullbleed layout vertical">
     <template is="dom-bind" id="app">
@@ -63,7 +65,7 @@
                     </paper-header-panel>
                 </div>
             </paper-drawer-panel>
-
+            <audio id="audio-player" is="audio-player"></audio>
         </div>
     </template>
     <script src="app.js"></script>

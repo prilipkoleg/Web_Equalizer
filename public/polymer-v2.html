@@ -18,16 +18,31 @@
     <link rel="import" href="src/bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="src/bower_components/paper-icon-button/paper-icon-button.html">
 
+
+
+    <link rel="import" href="elements/audio-player.html">
+
+
 </head>
 <body unresolved class="fullbleed vertical layout">
     <template is="dom-bind" id="app">
         <div id="main-holder">
+            <audio id="audio-player" is="audio-player"></audio>
             <paper-drawer-panel id="app-drawer" class="flex">
                     <paper-header-panel drawer>
                         <paper-toolbar>
                             <div>Application</div>
                         </paper-toolbar>
-                        <div> Drawer content... </div>
+                        <div>
+                            <div class="content fit">
+                                <paper-menu id="nav">
+                                    <paper-item data-route="menu item 1" on-tap="navigate">menu item 1</paper-item>
+                                    <paper-item data-route="menu item 2" on-tap="navigate">menu item 2</paper-item>
+                                    <paper-item data-route="menu item 3" on-tap="navigate">menu item 3</paper-item>
+                                    <paper-item data-route="menu item 4" on-tap="navigate">menu item 4</paper-item>
+                                </paper-menu>
+                            </div>
+                        </div>
                     </paper-header-panel>
                     <paper-header-panel main>
                         <paper-toolbar>
@@ -37,7 +52,6 @@
                         <div> Main content... </div>
                     </paper-header-panel>
             </paper-drawer-panel>
-
         </div>
     </template>
     <script src="app.js"></script>
