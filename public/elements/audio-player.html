@@ -1,365 +1,59 @@
-<link rel="import" href="../src/bower_components/polymer/polymer.html"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>polymer app</title>
 
-<link rel="import" href="../src/bower_components/paper-progress/paper-progress.html"/>
-<link rel="import" href="../src/bower_components/paper-slider/paper-slider.html"/>
-<link rel="import" href="../src/bower_components/iron-icons/iron-icons.html"/>
-<link rel="import" href="../src/bower_components/iron-icons/av-icons.html"/>
+    <link rel="stylesheet" href="src/css/main.css"/>
+
+    <script src="src/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+
+    <link rel="import" href="src/bower_components/paper-drawer-panel/paper-drawer-panel.html">
+    <link rel="import" href="src/bower_components/paper-header-panel/paper-header-panel.html">
+    <link rel="import" href="src/bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="src/bower_components/paper-menu/paper-menu.html">
+    <link rel="import" href="src/bower_components/paper-menu/paper-submenu.html">
+    <link rel="import" href="src/bower_components/paper-item/paper-item.html">
+    <link rel="import" href="src/bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+    <link rel="import" href="src/bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="src/bower_components/paper-icon-button/paper-icon-button.html">
 
 
-<dom-module id="audio-player">
-<style>
-    #audio-player-view{
-        display: flex;
-        padding: 0 10px 0 0;
-        position: relative;
-        height: 50px;
-        overflow: hidden;
-    }
 
-    .ac-controls {
-        position: relative;
-        width: 256px;
-        z-index: 100;
-        height: 50px;
-        border-right: 1px solid #D9E0E7;
-    }
+    <link rel="import" href="elements/audio-player.html">
 
-    #canvas {
-        position: absolute;
-        width: 256px;
-        height: 50px;
-        left: 0;
-        opacity: 0.3;
-        z-index: 0;
-        overflow: hidden;
-    }
 
-    .player-btn {
-        flex-basis: 32px;
-        padding: 0 10px;
-        line-height: 50px;
-        cursor: pointer;
-        height: 50px;
-        display: inline-block;
-    }
-    .player-btn iron-icon {
-        --iron-icon-height: 32px;
-        --iron-icon-width: 32px;
-    }
-    .played-time {
-        flex-basis: 80px;
-        padding: 0 10px;
-        line-height: 50px;
-        height: 50px;
-        text-align: center;
-        display: inline-block;
-        font-size: 24px;
-    }
-    .player-info {
-        flex: 1;
-        height: 35px;
-        padding: 10px 10px 5px;
-        position: relative;
-        z-index: 100;
-    }
-    .ac-track-controls .progress {
-        height: 10px;
-        position: relative;
-        margin-right: 5px;
-    }
-    .ac-track-controls .progress > paper-progress {
-        position: absolute;
-        top: 2px;
-        width: 100%;
-        height: 6px;
-    }
-    .ac-track-controls .progress > paper-progress {
-        --paper-progress-active-color: #369;
-    }
-    .ac-track-controls .progress paper-slider {
-        width: auto;
-        position: absolute;
-        top: -12px;
-        left: -16px;
-        right: -16px;
-    }
-
-    #slider /deep/ #sliderBar.paper-slider {
-                       height: 6px;
-                   }
-
-    #slider /deep/ #progressContainer {
-                       background-color: transparent;
-                   }
-
-    #slider /deep/ #activeProgress {
-                       background-color: transparent;
-                   }
-
-    #slider /deep/ #sliderKnobInner {
-                       position: relative;
-                       top: 1px;
-                       background-color: #369;
-                   }
-
-    .ac-track-controls .volume {
-        flex-basis: 80px;
-        margin-left: 30px;
-        height: 10px;
-        position: relative;
-    }
-
-    #volume-slider {
-        width: auto;
-        position: absolute;
-        top: -12px;
-        left: -16px;
-        right: -16px;
-    }
-
-    #volume-slider /deep/ #sliderBar.paper-slider {
-                              height: 6px;
-                          }
-
-    #volume-slider /deep/ #activeProgress {
-                              background-color: #369;
-                          }
-
-    #volume-slider /deep/ #sliderKnobInner {
-                              position: relative;
-                              top: 1px;
-                              background-color: #369;
-                          }
-
-    .volume-label {
-        position: absolute;
-        top: -6px;
-        left: -26px;
-
-    }
-
-    .volume-label iron-icon {
-        color: #369;
-    }
-
-    /*#volume-slider /deep/ #sliderKnobInner:before {
-        top: -2px!important;
-        left: -8px!important;
-        background: red;
-    }
-
-    #volume-slider /deep/ #sliderKnobInner:after {
-        content: attr(value) "%"!important;
-        top: -2px!important;
-        left: -8px!important;
-    }*/
-
-</style>
-<template>
-    <iron-ajax id="ajax"
-               handle-as="json"
-               on-response="handleResponse"></iron-ajax>
-    <div id="audio-player-view">
-        <canvas id="canvas" width="256" height="50"></canvas>
-        <div class="ac-controls layout horizontal">
-            <span class="prev-btn player-btn" on-click="moveToPrev"><iron-icon icon="av:skip-previous"></iron-icon></span>
-            <span class="play-btn player-btn" on-click="togglePlay"><iron-icon icon$="[[playBtnIcon(status)]]"></iron-icon></span>
-            <span class="next-btn player-btn" on-click="moveToNext"><iron-icon icon="av:skip-next"></iron-icon></span>
-                <span class="played-time layout vertical center-center">
-                    <span>[[playedTime]]</span>
-                </span>
-        </div>
-        <div class="player-info">
-            <div class="title"><span>[[currentTrack.artist]]</span>&nbsp;-&nbsp;<span>[[currentTrack.title]]</span></div>
-            <div class="ac-track-controls layout horizontal">
-                <div class="progress flex">
-                    <paper-progress max="{{currentTrack.duration}}" value$="[[progressTime]]"></paper-progress>
-                    <paper-slider id="slider" max="{{currentTrack.duration}}" value$="{{progressTime}}"></paper-slider>
+</head>
+<body unresolved class="fullbleed vertical layout">
+<template is="dom-bind" id="app">
+    <div id="main-holder">
+        <audio id="audio-player" is="audio-player"></audio>
+        <paper-drawer-panel id="app-drawer" class="flex">
+            <paper-header-panel drawer>
+                <paper-toolbar>
+                    <div>Application</div>
+                </paper-toolbar>
+                <div>
+                    <div class="content fit">
+                        <paper-menu id="nav">
+                            <paper-item data-route="menu item 1" on-tap="navigate">menu item 1</paper-item>
+                            <paper-item data-route="menu item 2" on-tap="navigate">menu item 2</paper-item>
+                            <paper-item data-route="menu item 3" on-tap="navigate">menu item 3</paper-item>
+                            <paper-item data-route="menu item 4" on-tap="navigate">menu item 4</paper-item>
+                        </paper-menu>
+                    </div>
                 </div>
-                <div class="volume">
-                    <div class="volume-label"><iron-icon icon="av:volume-up"></iron-icon></div>
-                    <paper-slider id="volume-slider" min="0" max="100" step="10" value$="{{currentVolume}}"></paper-slider>
-                </div>
-            </div>
-
-        </div>
+            </paper-header-panel>
+            <paper-header-panel main>
+                <paper-toolbar>
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <div>Title</div>
+                </paper-toolbar>
+                <div> Main content... </div>
+            </paper-header-panel>
+        </paper-drawer-panel>
     </div>
 </template>
-<script>
-    Polymer({
-        is: "audio-player",
-        extends: 'audio',
-        properties: {
-            currentTrack: {
-                type: Object,
-                notify: true,
-                observer: '_currentTrackChanged'
-            },
-            currentTrackIndex: {
-                type: Number,
-                notify: true
-            },
-            playlist: Array,
-            playedTime: {
-                type: String,
-                notify: true,
-                value: '0:00'
-            },
-            status: {
-                type: String,
-                notify: true,
-                value: 'pause'
-            },
-            progressTime: {
-                type: String,
-                notify: true
-            },
-            updateProcessTime: {
-                type: Boolean,
-                value: true
-            },
-            currentVolume: {
-                type: String,
-                notify: true
-            }
-        },
-        ready: function () {
-            var holder = document.createElement('div');
-            holder.className = "audio-player-holder";
-            this.parentNode.appendChild(holder);
-            holder.appendChild(this);
-            holder.appendChild(this.$["audio-player-view"]);
-        },
-        start: function(){
-            var self = this;
-            this.currentVolume = this.volume*100;
-            this.$.ajax.url = "https://api.vk.com/method/audio.get?v=5.37&access_token=" + app.token;
-            this.$.ajax.generateRequest();
-            this.addEventListener('ended', function(e){
-                self.moveToNext();
-                setTimeout(function(){
-                    self.play();
-                }, 1000);
-            });
-            this.addEventListener('timeupdate', function(e){
-                var minutes, seconds;
-
-                if(this.updateProcessTime){
-                    this.progressTime = e.target.currentTime;
-                }
-
-                minutes = parseInt(e.target.currentTime / 60, 10);
-                seconds = parseInt(e.target.currentTime % 60, 10);
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                this.playedTime = minutes + ":" + seconds;
-            });
-            this.addEventListener('play', function (e) {
-                this.status = 'play';
-                /*app.notifier.notify({
-                 'title': 'New track played!!!',
-                 'message': self.currentTrack.artist + ' - ' + self.currentTrack.title
-                 });*/
-            });
-            this.addEventListener('pause', function (e) {
-                this.status = 'pause';
-            });
-
-            this.$.slider.addEventListener('mousedown', function(e){
-                self.updateProcessTime = false;
-            });
-            this.$.slider.addEventListener('mouseup', function(e){
-                self.updateProcessTime = true;
-            });
-            this.$.slider.addEventListener('change', function(e){
-                self.pause();
-                self.currentTime = this.value;
-                self.progressTime = this.value;
-                self.updateProcessTime = true;
-                self.play();
-            });
-
-            this.$['volume-slider'].addEventListener('change', function(e){
-                console.log(this.value/100);
-                self.volume = this.value/100;
-                self.currentVolume = this.value;
-            });
-
-            var eqColor = '#369';
-            var canvas = this.$.canvas, ctx = canvas.getContext('2d');
-            var audio = this,
-                    audioContext = new AudioContext(),
-                    source = audioContext.createMediaElementSource(audio),
-                    analyser = audioContext.createAnalyser();
-
-            source.connect(analyser);
-            analyser.connect(audioContext.destination);
-
-            setInterval(function(){
-                var width = 256, height = 50;
-                var freqData = new Uint8Array(analyser.frequencyBinCount);
-                analyser.getByteFrequencyData(freqData);
-                ctx.clearRect(0, 0, width, height);
-                for (var i = 0; i < freqData.length; i++ ) {
-                    var magnitude = freqData[i];
-                    ctx.fillStyle= eqColor;
-                    ctx.fillRect(i*2, height+10, 1.5, -magnitude/5);
-                }
-
-            }, 33);
-        },
-        handleResponse: function(e, data){
-            console.log('Playlist: ', data.response);
-            this.playlist = data.response.response.items;
-            this.currentTrackIndex = 0;
-            this.currentTrack = this.playlist[0];
-        },
-        _currentTrackChanged: function(track, oldTrack){
-            this.src = track.url;
-        },
-        playTrack: function (index) {
-            this.playedTime = "0:00";
-            this.currentTrackIndex = index;
-            this.currentTrack = this.playlist[index];
-            this.play();
-        },
-        togglePlay: function () {
-            if(this.paused){
-                this.play();
-            } else {
-                this.pause();
-            }
-        },
-        moveToPrev: function () {
-            var newIndex = this.currentTrackIndex - 1;
-            newIndex = (newIndex < 0)? this.playlist.length - 1 : newIndex;
-            this.currentTrackIndex = newIndex;
-            this.currentTrack = this.playlist[this.currentTrackIndex];
-            if(this.status === 'play') this.play();
-        },
-        moveToNext: function () {
-            var newIndex = this.currentTrackIndex + 1;
-            newIndex = (newIndex > (this.playlist.length - 1)) ? 0 : newIndex;
-            this.currentTrackIndex = newIndex;
-            this.currentTrack = this.playlist[this.currentTrackIndex];
-            if(this.status === 'play') this.play();
-        },
-        playBtnIcon: function (status) {
-            if(status === "pause"){
-                return 'av:play-arrow';
-            } else {
-                return 'av:pause';
-            }
-        },
-        getInfo: function () {
-            return {
-                playlist: this.playlist,
-                playedTime: this.playedTime,
-                status: this.status,
-                currentTrack: this.currentTrack,
-                currentTrackIndex: this.currentTrackIndex
-            }
-        }
-    });
-</script>
-</dom-module>
+<script src="app.js"></script>
+</body>
+</html>
